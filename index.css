@@ -1,0 +1,55 @@
+header {
+  margin: 10vw 20vw 0 20vw;
+}
+
+body {
+  background-color: #b69b7d;
+  font-family: "DM Sans", sans-serif;
+}
+
+main {
+  margin: 0 20vw 0 20vw;
+  background-color: black;
+}
+
+.container {
+  background-color: #b69b7d;
+}
+
+.label-container {
+  display: grid;
+  grid-template-columns: 1em auto 1em;
+  grid-gap: 0.5em;
+  font: 1rem;
+  margin: 10px 0;
+}
+
+.label-container input[type="text"] {
+  font-size: 1em;
+  background-color: rgb(0,0,0,0);
+  outline: none;
+  border: 0;
+}
+
+
+
+
+
+#button-add {
+  display: block;
+  margin-left: auto;
+  padding: 0.5vw 2vw;
+  
+  border-radius: 20px;
+  border: 0;
+}
+
+@media screen and (max-width:830px){
+  header{
+    margin: 10vw 10vw 0 10vw;
+  }
+
+  main{
+    margin: 0 10vw;
+  }
+}

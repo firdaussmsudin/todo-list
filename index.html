@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/fb2e95a228.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <h1>ToDo List</h1>
+      <p>Just a simple to do list</p>
+      <hr />
+    </header>
+    <main>
+      <div class="container">
+        <div id="list"></div>
+        <button id="button-add">Add</button>
+
+        <p class="title-complete">Completed (<span id="numberCompleted">0</span>)</p>
+        <div id="complete"></div>
+      </div>
+    </main>
+
+    <script>
+      document.getElementById("button-add").addEventListener("click", addList);
+
+      var init = 1;
+
+      function addList() {
+        let labelID = "labelID-" + init;
+        let checkBoxID = "checkBoxID-" + init;
+        let textInputID = "textInputID-" + init;
+        let buttonDeleteID = "buttonDelete-" + init;
+
+        const createLabel = document.createElement("label");
+        createLabel.className = "label-container";
+        createLabel.id = labelID;
+
+        const createCheckBox = document.createElement("input");
+        createCheckBox.setAttribute("type", "checkbox");
+        createCheckBox.className = "list-checkbox";
+        createCheckBox.id = checkBoxID;
+        createCheckBox.addEventListener("click", listCheck);
+
+        const createTextInput = document.createElement("input");
+        createTextInput.setAttribute("type", "text");
+        createTextInput.className = "list-textinput";
+        createTextInput.id = textInputID;
+
+        const createButtonDelete = document.createElement("i");
+        createButtonDelete.id = buttonDeleteID;
+        createButtonDelete.className = "fa-solid fa-xmark";
+
+        createLabel.appendChild(createCheckBox);
+        createLabel.appendChild(createTextInput);
+        createLabel.appendChild(createButtonDelete);
+        
+
+        document.getElementById("list").appendChild(createLabel);
+        
+        document.getElementById(textInputID).focus();
+        document.getElementById(labelID).addEventListener('click', event =>{
+          event.preventDefault();
+        })
+
+        init++;
+
+        document.getElementById(buttonDeleteID).addEventListener('click',function(){
+          deleteList(this.id);
+        })
+        let marked = 0;
+
+        document
+          .getElementById(textInputID)
+          .addEventListener("keyup", (event) => {
+            textValue = document.getElementById(textInputID).value;
+            if (event.keyCode === 13) addList();
+            else if (textValue == '' && event.keyCode === 8){
+              if (marked === 1) deleteList(textInputID);
+              marked++;
+            };
+          });
+      }
+
+      function listCheck() {
+        const getLabelID = document.getElementById(this.id).parentElement.id;
+        const listClick = document.getElementById(getLabelID);
+        const getTextID = document.getElementById(this.id).nextSibling.id;
+
+        document.getElementById(getTextID).disabled = true;
+        document.getElementById(this.id).disabled = true;
+        document.getElementById("complete").appendChild(listClick);
+        listClick.classList.add("list-complete");
+
+        updateCompleteNumber();
+      }
+
+      function deleteList(buttonDeleteID) {
+        const getLabelID = document.getElementById(buttonDeleteID).parentElement.id;
+        if (document.getElementById(getLabelID).previousSibling != null){
+          const getPreviousID = document.getElementById(getLabelID).previousSibling.id;
+          document.getElementById(getPreviousID).children[1].focus();
+        }
+        document.getElementById(getLabelID).remove();
+        
+        updateCompleteNumber();
+      }
+
+      function updateCompleteNumber(){
+        const getLength = document.getElementsByClassName("list-complete").length;
+        document.getElementById('numberCompleted').innerHTML = getLength;
+      }
+    </script>
+  </body>
+</html>
